@@ -1,8 +1,12 @@
 import React from 'react';
+import './landing.css';
 
 const App = () => (
-    <div>
-        <h1>App</h1>
+    <div className='landing-page-container'>
+        <p className='landing-page-title'>Landing Page</p>
+        <div className="landing-page-text">
+            This page can be seen by anyone.
+        </div>
     </div>
 );
 

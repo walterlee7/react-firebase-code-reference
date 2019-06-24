@@ -1,0 +1,14 @@
+.landing-page-container {
+    text-align: center;
+    font-size: 20px;
+}
+
+.landing-page-title {
+    font-weight: bold;
+}
+
+.landing-page-text {
+    display: inline-block;
+    padding: 1em;
+    background-color: white;
+}
