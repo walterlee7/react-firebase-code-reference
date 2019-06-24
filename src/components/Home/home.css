@@ -1,0 +1,15 @@
+.home-page-container {
+    text-align: center;
+    font-size: 20px;
+}
+
+.home-page-title {
+    font-weight: bold;
+}
+
+.home-page-text {
+    display: inline-block;
+    margin: 0;
+    padding: 1em;
+    background-color: white;
+}

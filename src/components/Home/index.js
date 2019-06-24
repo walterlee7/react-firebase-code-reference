@@ -1,11 +1,12 @@
 import React from 'react';
+import './home.css';
 
 import { withAuthorization } from '../Session';
 
 const HomePage = () => (
-    <div>
-        <h1>Home Page</h1>
-        <p>The Home Page is accessible by every signed in user.</p>
+    <div className='home-page-container'>
+        <p className='home-page-title'>Home Page</p>
+        <p className='home-page-text'>The Home Page is accessible by every signed in user.</p>
     </div>
 );
 
