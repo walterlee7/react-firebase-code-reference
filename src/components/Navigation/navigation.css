@@ -1,14 +1,19 @@
 .navigation-container {
     background-color: grey;
     display: flex;
-    text-align: center;
+    text-align: left;
 }
 
 .navigation-link {
-    margin: 1em;
+    height: 25px;
+    margin: 0.2em;
+    margin-top: auto;
+    margin-bottom: auto;
     padding: 0.5em;
-    font-size: 20px;
+    padding-top: auto;
+    padding-bottom: auto;
+    font-size: 16px;
     font-weight: bold;
-    background-color: white;
+    background-color: rgb(206, 206, 206);
     border: 1px solid black;
 }
