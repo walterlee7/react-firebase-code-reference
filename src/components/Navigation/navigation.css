@@ -20,3 +20,9 @@ a {
     text-decoration: none;
     color: rgb(25, 34, 116);
 }
+
+@media screen and (max-width: 420px) {
+    a {
+        font-size: 12px;
+    }
+}

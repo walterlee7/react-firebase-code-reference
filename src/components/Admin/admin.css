@@ -1,0 +1,33 @@
+.admin-container {
+    font-size: 18px;
+    text-align: center;
+}
+
+.admin-title {
+    font-weight: bold;
+}
+
+.admin-text {
+    display: inline-block;
+    margin: 1em;
+    padding: 1em;
+    background-color: white;
+}
+
+.admin-loading {
+    margin: 1em;
+}
+
+li {
+    list-style-position: inside;
+}
+
+ul {
+    padding: 0;
+}
+
+@media screen and (max-width: 420px) {
+    .admin-container {
+        font-size: 12px;
+    }
+}

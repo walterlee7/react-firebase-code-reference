@@ -6,3 +6,9 @@
     padding: 0.5em;
     box-shadow: rgba(0, 0, 0, 0.514) 7px 7px 7px;
 }
+
+@media screen and (max-width: 420px) {
+    .sign-out-button {
+        font-size: 12px;
+    }
+}
