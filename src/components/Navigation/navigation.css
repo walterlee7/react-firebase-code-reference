@@ -17,5 +17,6 @@
 }
 
 a {
-    text-decoration: none !important;
+    text-decoration: none;
+    color: rgb(25, 34, 116);
 }
