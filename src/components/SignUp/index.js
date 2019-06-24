@@ -109,7 +109,7 @@ class SignUpFormBase extends Component {
                 />
                 <button className="sign-up-button" disabled={isInvalid} type="submit">Sign Up</button>
 
-                {error && <p>{error.message}</p>}
+                {error && <p className='sign-up-error'>{error.message}</p>}
             </form>
         );
     }
