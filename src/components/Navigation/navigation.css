@@ -5,15 +5,17 @@
 }
 
 .navigation-link {
-    height: 25px;
+    height: 20px;
     margin: 0.2em;
     margin-top: auto;
     margin-bottom: auto;
     padding: 0.5em;
-    padding-top: auto;
-    padding-bottom: auto;
     font-size: 16px;
     font-weight: bold;
     background-color: rgb(206, 206, 206);
     border: 1px solid black;
+}
+
+a {
+    text-decoration: none !important;
 }
