@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import './signin.css';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
@@ -9,7 +10,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
     <div>
-        <h1>SignIn</h1>
+        <p className='sign-in-title'>Sign In Form</p>
         <SignInForm />
         <PasswordForgetLink />
         <SignUpLink />
@@ -55,8 +56,9 @@ class SignInFormBase extends Component {
         const isInvalid = password === '' || email === '';
 
         return (
-            <form onSubmit={this.onSubmit}>
+            <form className='sign-in-form' onSubmit={this.onSubmit}>
                 <input
+                    className='sign-in-input'
                     name="email"
                     value={email}
                     onChange={this.onChange}
@@ -64,13 +66,14 @@ class SignInFormBase extends Component {
                     placeholder="Email Address"
                 />
                 <input
+                    className='sign-in-input'
                     name="password"
                     value={password}
                     onChange={this.onChange}
                     type="password"
                     placeholder="Password"
                 />
-                <button disabled={isInvalid} type="submit">
+                <button className='sign-in-button' disabled={isInvalid} type="submit">
                     Sign In
         </button>
 
