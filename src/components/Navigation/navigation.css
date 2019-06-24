@@ -1,0 +1,14 @@
+.navigation-container {
+    background-color: grey;
+    display: flex;
+    text-align: center;
+}
+
+.navigation-link {
+    margin: 1em;
+    padding: 0.5em;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid black;
+}
