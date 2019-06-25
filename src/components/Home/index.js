@@ -1,130 +1,141 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import './home.css';
 
-import { withAuthorization } from '../Session';
+import { AuthUserContext, withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
-import { compose } from 'recompose';
-import * as ROUTES from '../../constants/routes';
 
 const HomePage = () => (
     <div className='home-page-container'>
         <p className='home-page-title'>Home Page</p>
         <p className='home-page-text'>The Home Page is accessible by every signed in user.</p>
 
-        <SignUpForm />
+        <Messages />
     </div>
 );
 
-const INITIAL_STATE = {
-    username: '',
-    email: '',
-    passwordOne: '',
-    passwordTwo: '',
-    error: null,
-};
-
-class SignUpFormBase extends Component {
+class MessagesBase extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { ...INITIAL_STATE };
+        this.state = {
+            text: '',
+            loading: false,
+            messages: [],
+        };
     }
 
-    onSubmit = event => {
-        const { username, email, passwordOne } = this.state;
+    componentDidMount() {
+        this.setState({ loading: true });
 
-        this.props.firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
-                // Create a user in your Firebase realtime database
-                return this.props.firebase
-                    .user(authUser.user.uid)
-                    .set({
-                        username,
-                        email,
-                    });
-            })
-            .then(() => {
-                this.setState({ ...INITIAL_STATE });
-                this.props.history.push(ROUTES.HOME);
-            })
-            .catch(error => {
-                this.setState({ error });
-            });
+        this.props.firebase.messages().on('value', snapshot => {
+            const messageObject = snapshot.val();
+
+            if (messageObject) {
+                const messageList = Object.keys(messageObject).map(key => ({
+                    ...messageObject[key],
+                    uid: key,
+                }));
+
+                this.setState({
+                    messages: messageList,
+                    loading: false
+                });
+            } else {
+                this.setState({ messages: null, loading: false });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this.props.firebase.messages().off();
+    }
+
+    onChangeText = event => {
+        this.setState({ text: event.target.value });
+    };
+
+    onCreateMessage = (event, authUser) => {
+        this.props.firebase.messages().push({
+            text: this.state.text,
+            userId: authUser.uid,
+        });
+
+        this.setState({ text: '' });
 
         event.preventDefault();
-    }
+    };
 
-    onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+    onRemoveMessage = uid => {
+        this.props.firebase.message(uid).remove();
+    };
+
+    onEditMessage = () => {
+
     };
 
     render() {
-
-        const {
-            username,
-            email,
-            passwordOne,
-            passwordTwo,
-            error,
-        } = this.state;
-
-        const isInvalid =
-            passwordOne !== passwordTwo ||
-            passwordOne === '' ||
-            email === '' ||
-            username === '';
+        const { text, messages, loading } = this.state;
 
         return (
-            <form className='sign-up-form' onSubmit={this.onSubmit}>
-                <input
-                    className="sign-up-input"
-                    name="username"
-                    value={username}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Full Name"
-                />
-                <input
-                    className="sign-up-input"
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    className="sign-up-input"
-                    name="passwordOne"
-                    value={passwordOne}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <input
-                    className="sign-up-input"
-                    name="passwordTwo"
-                    value={passwordTwo}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Confirm Password"
-                />
-                <button className="sign-up-button" disabled={isInvalid} type="submit">Sign Up</button>
+            <AuthUserContext.Consumer>
+                {authUser => (
+                    <div>
+                        {loading && <div>Loading ...</div>}
 
-                {error && <p className='sign-up-error'>{error.message}</p>}
-            </form>
+                        {messages ? (
+                            <MessageList
+                                messages={messages}
+                                onEditMessage={this.onEditMessage}
+                                onRemoveMessage={this.onRemoveMessage}
+                            />
+                        ) : (
+                                <div>There are no messages ...</div>
+                            )}
+
+                        <form onSubmit={event => this.onCreateMessage(event, authUser)}>
+                            <input
+                                type="text"
+                                value={text}
+                                onChange={this.onChangeText}
+                            />
+                            <button type="submit">Send</button>
+                        </form>
+                    </div>
+                )}
+            </AuthUserContext.Consumer>
         );
     }
 }
 
-const SignUpForm = compose(
-    withRouter,
-    withFirebase,
-)(SignUpFormBase);
+const MessageList = ({ messages, onEditMessage, onRemoveMessage }) => (
+    <ul>
+        {messages.map(message => (
+            <MessageItem
+                key={message.uid}
+                message={message}
+                onEditMessage={onEditMessage}
+                onRemoveMessage={onRemoveMessage}
+            />
+        ))}
+    </ul>
+);
+
+const MessageItem = ({ message, onRemoveMessage }) => (
+    <li>
+        <strong>{message.userId}</strong> {message.text}
+        <button
+            type="button"
+            onClick={() => onRemoveMessage(message.uid)}
+        >
+            Delete
+        </button>
+    </li>
+);
+
+const Messages = withFirebase(MessagesBase);
 
 const condition = authUser => !!authUser;
 
 export default withAuthorization(condition)(HomePage);
 
-export { SignUpForm };
+
