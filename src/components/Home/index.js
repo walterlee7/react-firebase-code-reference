@@ -87,7 +87,18 @@ class MessagesBase extends Component {
             <AuthUserContext.Consumer>
                 {authUser => (
                     <div>
-                        {loading && <div>Loading ...</div>}
+                        {loading && <div className='message-loading' >Loading ...</div>}
+
+                        <form className='message-form' onSubmit={event => this.onCreateMessage(event, authUser)}>
+                            <input
+                                className='message-form-input'
+                                placeholder='Enter Message'
+                                type="text"
+                                value={text}
+                                onChange={this.onChangeText}
+                            />
+                            <button className='message-form-button' type="submit">Send</button>
+                        </form>
 
                         {messages ? (
                             <MessageList
@@ -96,17 +107,8 @@ class MessagesBase extends Component {
                                 onRemoveMessage={this.onRemoveMessage}
                             />
                         ) : (
-                                <div>There are no messages ...</div>
+                                <div className='message-form-empty' >There are no messages ...</div>
                             )}
-
-                        <form onSubmit={event => this.onCreateMessage(event, authUser)}>
-                            <input
-                                type="text"
-                                value={text}
-                                onChange={this.onChangeText}
-                            />
-                            <button type="submit">Send</button>
-                        </form>
                     </div>
                 )}
             </AuthUserContext.Consumer>
@@ -160,30 +162,39 @@ class MessageItem extends Component {
         const { editMode, editText } = this.state;
 
         return (
-            <li>
+            <li className='message-form-li'>
                 {editMode ? (
                     <input
+                        className='message-form-input'
                         type="text"
                         value={editText}
                         onChange={this.onChangeEditText}
                     />
                 ) : (
-                        <span>
-                            <strong>{message.userId}</strong> {message.text}
+                        <span className='message-form-container'>
+                            <div className='message-form-text'>{message.userId}</div> <div className='message-form-text'>{message.text}</div>
+                            <div className='message-form-text'>
+                                {message.editedAt && <span>(Edited)</span>}
+                            </div>
                         </span>
                     )}
                 {editMode ? (
-                    <span>
-                        <button onClick={this.onSaveEditText}>Save</button>
-                        <button onClick={this.onToggleEditMode}>Reset</button>
+                    <span className='message-edit-container'>
+                        <button className='message-form-button' onClick={this.onSaveEditText}>Save</button>
+                        <button className='message-form-button' onClick={this.onToggleEditMode}>Reset</button>
                     </span>
 
                 ) : (
-                        <button onClick={this.onToggleEditMode}>Edit</button>
+                        <button
+                            className='message-form-button'
+                            onClick={this.onToggleEditMode}
+                        >Edit
+                        </button>
                     )}
 
                 {!editMode && (
                     <button
+                        className='message-form-button'
                         type="button"
                         onClick={() => onRemoveMessage(message.uid)}
                     >

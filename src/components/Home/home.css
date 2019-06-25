@@ -13,3 +13,72 @@
     padding: 1em;
     background-color: white;
 }
+
+.message-form {
+    background-color: grey;
+    text-align: center;
+    max-width: 350px;
+    margin: 0.5em;
+    padding: 0.5em;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.message-form-input {
+    text-align: center;
+    margin: 0.5em;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.message-form-button {
+    margin: 0.5em;
+    color: black;
+    background-color: white;
+    font-size: 20px;
+    padding: 0.5em;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.514) 7px 7px 7px;
+}
+
+.message-form-container {
+    display: inline-block;
+    padding: 1em;
+    background-color: rgb(88, 88, 88);
+}
+
+.message-form-text {
+    font-weight: bold;
+    margin: 0.5em;
+    padding: 0.5em;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.message-form-li {
+    margin: 0.5em;
+}
+
+.message-form-empty {
+    display: inline-block;
+    margin: 0;
+    padding: 1em;
+    background-color: white;
+}
+
+.message-edit-container {
+    display: inline-block;
+    padding: 0.5em;
+    background-color: rgb(88, 88, 88);
+}
+
+.message-loading {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0.5em;
+    padding: 0.5em;
+    border: 1px solid black;
+    background-color: white;
+}
