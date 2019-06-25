@@ -3,7 +3,7 @@ import './landing.css';
 
 const App = () => (
     <div className='landing-page-container'>
-        <p className='landing-page-title'>Landing Page - React with Firebase</p>
+        <p className='landing-page-title'>React with Firebase Landing Page</p>
         <div className="landing-page-text">
             This page can be seen by anyone.
         </div>
